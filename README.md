@@ -1,2 +1,2 @@
-tech.notes
+My Notebooks
 ==========
