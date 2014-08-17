@@ -55,7 +55,7 @@ p(n|\lambda_1,\lambda_2,X) & = \frac{p(n,\lambda_1,\lambda_2,X)}{p(\lambda_1,\la
 						   & = \prod_{i=1}^n e^{-\lambda_1}\frac{\lambda_1^{x_i}}{x_i!} \prod_{i=n+1}^N e^{-\lambda_2}\frac{\lambda_2^{x_i}}{x_i!} \\
 						   & \propto \prod_{i=1}^n e^{-\lambda_1}\lambda_1^{x_i} \prod_{i=n+1}^N e^{-\lambda_2} \lambda_2^{x_i} \\
 						   & = exp(-n\lambda_1 - (N-n)\lambda_2)\lambda_1^{\sum_{i=1}^nx_i}\lambda_2^{\sum_{i=n+1}^Nx_i} \\
-						   & = exp(\sum_{i=1}^nlog\lambda_1 + \sum_{i=n+1}^Nlog\lambda_2 - n\lambda_1 - (N-n)\lambda_2) 
+						   & = exp(\sum_{i=1}^nx_ilog\lambda_1 + \sum_{i=n+1}^Nx_ilog\lambda_2 - n\lambda_1 - (N-n)\lambda_2) 
 \end{split}
 \end{equation}
 
@@ -65,13 +65,13 @@ So we sample $n$ from a multinomial distribution which depends on $\lambda_1$, $
 \begin{split}
 p(\lambda_1|\lambda_2,n,X) & \propto p(\lambda_1,\lambda_2,n,X) \\  
 						   & \propto p(\lambda_1|X_{1,2,\cdots,n}) \\
-						   & = \Gamma(\lambda_1;a + \sum_{i=1}^n,b + n)
+						   & = \Gamma(\lambda_1;a + \sum_{i=1}^nX_i,b + n)
 \end{split}
 \end{equation}
 
 $\lambda_2$ has the same story:
 \begin{equation}
-p(\lambda_2|\lambda_1,n,X) \propto \Gamma(\lambda_2; a + \sum_{i=n+1}^N,b+(N-n))
+p(\lambda_2|\lambda_1,n,X) \propto \Gamma(\lambda_2; a + \sum_{i=n+1}^NX_i,b+(N-n))
 \end{equation}
 
 Put all these things together, we have the gibbs sampler for our problem as below:
@@ -90,7 +90,7 @@ $i = 1$\;
 \end{algorithm}
 
 \section{Experiments}
-Here is the r \href{https://github.com/lleia/miscelaneous/blob/master/r/change_point_model/sampling.r}{code}. We use two binomial distributions (with 10 and 30 as expection respectively) to generate a sequence of length 100. After 10000 iterations,we get results as below,as we can see from the pictures, the sampling results work well to fit our test sequence.
+Here is the r \href{https://github.com/lleia/miscelaneous/blob/master/r/change_point_model/changePointModel.r}{code}. We use two binomial distributions (with 10 and 30 as expection respectively) to generate a sequence of length 100. After 10000 iterations,we get results as below,as we can see from the pictures, the sampling results work well to fit our test sequence.
  
 \begin{figure}
 \caption{Test Sequence}
